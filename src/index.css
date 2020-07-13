@@ -1,0 +1,31 @@
+:root {
+    --color1: #F8EDEB;
+    --color2: #FCD5CE;
+    --bg-color: #FFB5A7;
+    --color4: #F9DCC4;
+    --color5: #FEC89A;
+}
+
+*,
+*:before,
+*:after {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: "Roboto Light", sans-serif;
+}
+
+.container {
+    width: 1170px;
+    margin: 0 auto;
+}
+
+/* --- Header --- */
+.header {
+    width: 100%;
+    color: var(--color1);
+}
+
