@@ -4,6 +4,7 @@
     --bg-color: #FFB5A7;
     --color4: #F9DCC4;
     --color5: #FEC89A;
+    --dark-color: #222831;
 }
 
 *,
@@ -15,7 +16,7 @@
 
 body {
     background-color: var(--bg-color);
-    font-family: "Roboto Light", sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 .container {
@@ -27,5 +28,101 @@ body {
 .header {
     width: 100%;
     color: var(--color1);
+    padding: 30px;
+}
+
+/* --- Main --- */
+.main {
+    width: 100%;
+    max-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.filterable-todo-table {
+    padding: 50px 0 0;
+}
+
+.todo-label {
+    color: var(--dark-color);
+}
+
+.todo-table {
+
+}
+
+.todo-table div {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.todo-button {
+    margin-left: 10px;
+    padding: 10px 20px;
+
+    background: none;
+    color: var(--dark-color);
+
+    border: 1px solid var(--color4);
+    border-radius: 5px;
+
+    transition: .2s linear;
+
+    cursor: pointer;
+}
+
+.todo-button.remove {
+    border: none;
+}
+
+.todo-button:hover {
+    background: var(--color5);
+
+    transition: .2s linear;
+}
+
+.todo-text {
+    padding: 10px 15px;
+
+    border: 1px solid var(--color4);
+    border-radius: 5px;
+
+    background: var(--bg-color);
+    color: var(--dark-color);
+}
+
+.todo-items {
+    max-width: 400px;
+
+    margin: 10px 0 0 12px;
+
+    color: var(--dark-color);
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 5px;
+}
+
+/*.todo-item:after {*/
+/*    content: 'active';*/
+
+/*    margin-left: 10px;*/
+
+/*    color: #086972;*/
+/*    padding: 2px 5px;*/
+/*    font-style: italic;*/
+/*    border: 1px solid #086972;*/
+/*    border-radius: 5px;*/
+
+/*    font-size: .8em;*/
+/*}*/
+
+.todo-done {
+    font-style: italic;
+    text-decoration: line-through;
 }
 

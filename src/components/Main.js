@@ -1,11 +1,36 @@
-import React from 'react';
-import FilterableProductRow from './todolist/FilterableProductTable';
+import React, {useState} from 'react';
+import FilterableTodoTable from './todolist/FilterableTodoTable';
 
-function Main(props) {
+function Main() {
+    const sortIcons = {
+        default: '❤️',
+        active: '🧡',
+        completed: '💛'
+    }
+
+    const [sortIcon, setSortIcon] = useState(sortIcons.default);
+
+    const changeSortIcon = sortIcon => {
+        switch (sortIcon) {
+            case sortIcons.active:
+                setSortIcon(sortIcons.completed);
+                break;
+            case sortIcons.completed:
+                setSortIcon(sortIcons.default);
+                break;
+            default:
+                setSortIcon(sortIcons.active);
+        }
+    };
+
     return (
-        <div>
-            <FilterableProductRow />
-        </div>
+        <main className="main">
+            <FilterableTodoTable
+                sortIcon={sortIcon}
+                sortIcons={sortIcons}
+                changeSortIcon={changeSortIcon}
+            />
+        </main>
     );
 }
 
