@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { addTodo } from '../../redux/actions';
 
-function AddTodoItemBar({addTodo}) {
+function AddTodoItemBar({ addTodo }) {
     const initialState = {value: ''};
     const [state, setState] = useState(initialState);
 
@@ -46,10 +46,4 @@ function AddTodoItemBar({addTodo}) {
     );
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        addTodo: value => dispatch(addTodo(value))
-    }
-}
-
-export default connect(null, mapDispatchToProps)(AddTodoItemBar);
+export default connect(null, { addTodo })(AddTodoItemBar);

@@ -1,23 +1,38 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
+import { getTodosByVisibilityFilter } from '../../redux/selectors';
+import {deleteTodo, toggleTodo, setVisibilityFilter} from '../../redux/actions';
+import { VisibilityFilters } from '../../redux/actionTypes';
 import TodoRow from './TodoRow';
-import {connect} from "react-redux";
-import {deleteTodo, toggleTodo} from "../../redux/actions";
 
-function TodoTable({ todoItems, toggleTodo, deleteTodo, sortIcons, sortIcon, changeSortIcon }) {
-    const copyTodoItems = [...todoItems];
+function TodoTable({ todoItems, toggleTodo, deleteTodo, setVisibilityFilter }) {
 
-    const filteredTodoItems = () => {
+    const sortIcons = {
+        SHOW_ALL: '❤️',
+        SHOW_ACTIVE: '🧡',
+        SHOW_COMPLETED: '💛'
+    }
+
+    const [sortIcon, setSortIcon] = useState(sortIcons.SHOW_ALL);
+
+    const changeSortIcon = sortIcon => {
         switch (sortIcon) {
-            case sortIcons.active:
-                return copyTodoItems.filter(todoItem => !todoItem.completed);
-            case sortIcons.completed:
-                return copyTodoItems.filter(todoItem => todoItem.completed);
+            case sortIcons.SHOW_ALL:
+                setVisibilityFilter(VisibilityFilters.SHOW_ACTIVE);
+                setSortIcon(sortIcons.SHOW_ACTIVE);
+                break;
+            case sortIcons.SHOW_ACTIVE:
+                setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED);
+                setSortIcon(sortIcons.SHOW_COMPLETED);
+                break;
+            case sortIcons.SHOW_COMPLETED:
             default:
-                return copyTodoItems;
+                setVisibilityFilter(VisibilityFilters.SHOW_ALL);
+                setSortIcon(sortIcons.SHOW_ALL);
         }
     };
 
-    const todoItemRows = filteredTodoItems().map((todoItem, index) =>
+    const todoItemRows = todoItems.map((todoItem, index) =>
         <TodoRow
             toggleTodo={toggleTodo}
             todoItem={todoItem}
@@ -32,23 +47,17 @@ function TodoTable({ todoItems, toggleTodo, deleteTodo, sortIcons, sortIcon, cha
                 Filter
                 <button className="todo-button" onClick={() => changeSortIcon(sortIcon)}><span role="img">{sortIcon}</span></button>
             </div>
-            <div>{todoItems.length === 0 && 'No todos yet 🙃'}</div>
+            <div>{todoItemRows.length === 0 && 'No todos yet 🙃'}</div>
             <ol className="todo-items">{todoItemRows}</ol>
         </div>
     );
 }
 
 function mapStateToProps(state) {
+    const { visibilityFilter } = state;
     return {
-        todoItems: state.todos
+        todoItems: getTodosByVisibilityFilter(state, visibilityFilter)
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        toggleTodo: id => dispatch(toggleTodo(id)),
-        deleteTodo: id => dispatch(deleteTodo(id))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoTable);
+export default connect(mapStateToProps, { toggleTodo, deleteTodo, setVisibilityFilter })(TodoTable);
