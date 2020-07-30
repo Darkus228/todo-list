@@ -47,10 +47,6 @@ body {
     color: var(--dark-color);
 }
 
-.todo-table {
-
-}
-
 .todo-table div {
     margin-top: 15px;
     text-align: center;
@@ -91,8 +87,12 @@ body {
     color: var(--dark-color);
 }
 
+.todo-form {
+    width: 100%;
+}
+
 .todo-items {
-    max-width: 400px;
+    width: 100%;
 
     margin: 10px 0 0 12px;
 
@@ -107,22 +107,26 @@ body {
     padding: 5px;
 }
 
-/*.todo-item:after {*/
-/*    content: 'active';*/
-
-/*    margin-left: 10px;*/
-
-/*    color: #086972;*/
-/*    padding: 2px 5px;*/
-/*    font-style: italic;*/
-/*    border: 1px solid #086972;*/
-/*    border-radius: 5px;*/
-
-/*    font-size: .8em;*/
-/*}*/
-
 .todo-done {
     font-style: italic;
     text-decoration: line-through;
+}
+
+.example-enter {
+    opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+
+.example-exit {
+    opacity: 1;
+}
+
+.example-exit.example-exit-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-out;
 }
 

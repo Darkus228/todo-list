@@ -1,28 +1,32 @@
-import React, { useState } from 'react';
+import React, {useRef, useState} from 'react';
 import { connect } from 'react-redux';
 import { addTodo } from '../../redux/actions';
 
 function AddTodoItemBar({ addTodo }) {
-    const initialState = {value: ''};
-    const [state, setState] = useState(initialState);
-
+    const initialValue = '';
+    const [value, setValue] = useState(initialValue);
+    const inputEl = useRef(null);
 
     const handleChange = event => {
         const { value } = event.target;
-        setState({ value });
+
+        setValue(value);
     }
 
-    const submitForm = () => {
-        if (!state.value.trim()) return;
+    const submitForm = (e) => {
+        e.preventDefault();
+        inputEl.current.focus();
 
-        addTodo(state.value);
+        if (!value.trim()) return;
 
-        setState(initialState);
+        addTodo(value);
+
+        setValue(initialValue);
     }
 
     return (
         <div className="todo-add">
-            <form className="todo-form">
+            <form className="todo-form" onSubmit={submitForm}>
                 <label
                     className="todo-label"
                     htmlFor="task"
@@ -33,14 +37,16 @@ function AddTodoItemBar({ addTodo }) {
                     className="todo-text"
                     type="text" id="task"
                     placeholder="Enter a task..."
-                    value={state.value}
+                    value={value}
                     onChange={handleChange}
+                    ref={inputEl}
+                    autoFocus
                 />
                 <input
                     className="todo-button"
-                    type="button"
+                    type="submit"
                     value="Add"
-                    onClick={submitForm}/>
+                />
             </form>
         </div>
     );

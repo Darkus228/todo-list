@@ -4,7 +4,7 @@ import {combineReducers} from 'redux';
 function todos(state = [], action) {
     switch (action.type) {
         case ActionType.ADD_TODO:
-            return [...state, action.payload];
+            return state.concat(action.payload);
         case ActionType.REMOVE_TODO:
             return state.filter((todo) => todo.id !== action.payload);
         case ActionType.TOGGLE_TODO:
