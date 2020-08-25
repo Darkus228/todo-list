@@ -1,132 +1,24 @@
 :root {
-    --color1: #F8EDEB;
-    --color2: #FCD5CE;
-    --bg-color: #FFB5A7;
-    --color4: #F9DCC4;
-    --color5: #FEC89A;
-    --dark-color: #222831;
+  --background-color: #E4DFDA;
+  --header-color: #059dc0;
+  --welcome-bg: #e9c46a;
+  --font-family: Arial, sans-serif;
 }
 
 *,
 *:before,
 *:after {
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: var(--bg-color);
-    font-family: "Roboto", sans-serif;
+  margin: 0;
+
+  font-family: var(--font-family);
 }
 
-.container {
-    width: 1170px;
-    margin: 0 auto;
+#root {
+  width: 100vw;
+  height: 100vh;
+  background: var(--background-color); 
 }
-
-/* --- Header --- */
-.header {
-    width: 100%;
-    color: var(--color1);
-    padding: 30px;
-}
-
-/* --- Main --- */
-.main {
-    width: 100%;
-    max-height: 100vh;
-    display: flex;
-    justify-content: center;
-}
-
-.filterable-todo-table {
-    padding: 50px 0 0;
-}
-
-.todo-label {
-    color: var(--dark-color);
-}
-
-.todo-table div {
-    margin-top: 15px;
-    text-align: center;
-}
-
-.todo-button {
-    margin-left: 10px;
-    padding: 10px 20px;
-
-    background: none;
-    color: var(--dark-color);
-
-    border: 1px solid var(--color4);
-    border-radius: 5px;
-
-    transition: .2s linear;
-
-    cursor: pointer;
-}
-
-.todo-button.remove {
-    border: none;
-}
-
-.todo-button:hover {
-    background: var(--color5);
-
-    transition: .2s linear;
-}
-
-.todo-text {
-    padding: 10px 15px;
-
-    border: 1px solid var(--color4);
-    border-radius: 5px;
-
-    background: var(--bg-color);
-    color: var(--dark-color);
-}
-
-.todo-form {
-    width: 100%;
-}
-
-.todo-items {
-    width: 100%;
-
-    margin: 10px 0 0 12px;
-
-    color: var(--dark-color);
-}
-
-.todo-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 5px;
-}
-
-.todo-done {
-    font-style: italic;
-    text-decoration: line-through;
-}
-
-.example-enter {
-    opacity: 0.01;
-}
-
-.example-enter.example-enter-active {
-    opacity: 1;
-    transition: opacity 500ms ease-in;
-}
-
-.example-exit {
-    opacity: 1;
-}
-
-.example-exit.example-exit-active {
-    opacity: 0.01;
-    transition: opacity 300ms ease-out;
-}
-
