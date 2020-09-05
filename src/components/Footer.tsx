@@ -1,7 +1,10 @@
-import React from "react";
-import '../styles/footer.css';
+import React, { useState } from 'react';
+import EditableInput from './EditableInput';
 
-const Footer = () => {
-  return <footer className="footer">footer</footer>;
+const Footer = (): JSX.Element => {
+    const [value, setValue] = useState('to do sm');
+
+    return <footer></footer>;
 };
+
 export default Footer;

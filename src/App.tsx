@@ -1,16 +1,14 @@
-import React, { Component } from "react";
-import Main from "./components/Main";
-import Footer from "./components/Footer";
+import React from 'react';
+import Main from './components/Main';
+import Footer from './components/Footer';
 
-class App extends Component {
-  render() {
+const App = (): JSX.Element => {
     return (
-      <>
-        <Main />
-        <Footer />
-      </>
+        <>
+            <Main />
+            <Footer />
+        </>
     );
-  }
-}
+};
 
 export default App;

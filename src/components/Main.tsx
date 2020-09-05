@@ -1,47 +1,38 @@
-import React, { useState } from "react";
-import TodoItems from "./TodoItems";
-import "../styles/main.css";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTodo } from '../redux/actions';
+import TodoItems from './todolist/TodoItems';
 
-type TodoItems = Array<{
-  id: number | undefined;
-  title: string | undefined;
-  description: string | undefined;
-}>;
+const Main = (): JSX.Element => {
+    const [inputValue, setInputValue] = useState('');
+    const dispatch = useDispatch();
 
-let id = 0;
-const Main = () => {
-  const [inputValue, setInputValue] = useState("");
-  const [todoItems, setTodoItems] = useState<TodoItems>([]);
+    const onAddTodoItem: (e: React.KeyboardEvent) => void = (e) => {
+        if (e.key === 'Enter') {
+            if (inputValue.trim() === '') return;
 
-  const onSubmitTodoItem = (e: React.KeyboardEvent) => {
-    const enterButton = 13;
-    if (e.keyCode === enterButton) {
-      setTodoItems([
-        ...todoItems,
-        { id: id++, title: inputValue, description: undefined },
-      ]);
-    }
-  };
+            dispatch(addTodo(inputValue));
 
-  return (
-    <main className="main">
-      <div className="welcome">
-        <div className="welcome-bg"></div>
-        <h1>Hello.</h1>
-      </div>
-      <div>
-        <input
-          type="text"
-          placeholder="Enter a task..."
-          onChange={(event) => setInputValue(event.target.value)}
-          onKeyDown={onSubmitTodoItem}
-        />
-      </div>
-      <div>
-        <TodoItems todoItems={todoItems} />
-      </div>
-    </main>
-  );
+            setInputValue('');
+        }
+    };
+
+    return (
+        <div className="flex justify-center my-4 mx-2 sm:mx-0">
+            <div className="w-full sm:w-1/2">
+                <input
+                    placeholder="Enter a task..."
+                    onChange={(event: any): void => setInputValue(event.target.value)}
+                    onKeyDown={onAddTodoItem}
+                    value={inputValue}
+                    className="bg-white my-1 focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+                    autoFocus
+                />
+                <h1 className="font-bold text-2xl text-green">Today</h1>
+                <TodoItems />
+            </div>
+        </div>
+    );
 };
 
 export default Main;
