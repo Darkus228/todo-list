@@ -19,7 +19,7 @@ export type TodoItemProps = {
 };
 
 export type TodoItemPopupProps = {
-    todoItemContent: string;
+    todo: TodoItemType;
     isOpen: boolean;
     onClose(): void;
 };

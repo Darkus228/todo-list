@@ -4,7 +4,6 @@ import { TodoItemType, ReduxState } from '../../utils/types';
 import { toggleTodo } from '../../redux/actions';
 import { TodoItemProps } from '../../utils/types';
 import TodoItemPopup from './TodoItemPopup';
-import closeIcon from "../../assets/images/close.svg";
 
 
 const TodoItem: React.FC<TodoItemProps> = ({ todoItem }): JSX.Element => {
@@ -25,7 +24,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ todoItem }): JSX.Element => {
             <button className="ml-2" onClick={onChangeAlertState}>
                 <p className="text-gray-600">{todoItem.description}</p>
             </button>
-            <TodoItemPopup todoItemContent={todoItem.description ?? 'undefined'} isOpen={isOpenAlert} onClose={onChangeAlertState}/>
+            <TodoItemPopup todo={todoItem} isOpen={isOpenAlert} onClose={onChangeAlertState}/>
         </li>
     );
 };

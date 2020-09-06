@@ -6,7 +6,11 @@ const EditableInput = ({ defaultValue, onChangeInputValue, onSubmit, children }:
 
     return (
         <div className="text-center">
-            {isEditing ? <input type="text" onChange={onChangeInputValue} value={defaultValue}/> : <p>{defaultValue}</p>}
+            {isEditing ? (
+                <input type="text" onChange={onChangeInputValue} value={defaultValue} />
+            ) : (
+                <h2 className="text-xl">{defaultValue}</h2>
+            )}
             {children(childrenProps)}
         </div>
     );
