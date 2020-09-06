@@ -3,6 +3,9 @@ import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { TodoItemType, ReduxState } from '../../utils/types';
 import { toggleTodo } from '../../redux/actions';
 import { TodoItemProps } from '../../utils/types';
+import TodoItemPopup from './TodoItemPopup';
+import closeIcon from "../../assets/images/close.svg";
+
 
 const TodoItem: React.FC<TodoItemProps> = ({ todoItem }): JSX.Element => {
     const [isOpenAlert, setIsOpenAlert] = useState(false);
@@ -10,15 +13,19 @@ const TodoItem: React.FC<TodoItemProps> = ({ todoItem }): JSX.Element => {
 
     const onToggleTodo = (): void => {
         dispatch(toggleTodo(todoItem.id));
+    };
+
+    const onChangeAlertState = (): void => {
         setIsOpenAlert(!isOpenAlert);
     };
 
     return (
         <li className="list-none bg-white w-full my-2">
             <input type="checkbox" onChange={onToggleTodo} />
-            <button className="ml-2">
+            <button className="ml-2" onClick={onChangeAlertState}>
                 <p className="text-gray-600">{todoItem.description}</p>
             </button>
+            <TodoItemPopup todoItemContent={todoItem.description ?? 'undefined'} isOpen={isOpenAlert} onClose={onChangeAlertState}/>
         </li>
     );
 };

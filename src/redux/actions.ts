@@ -17,3 +17,11 @@ export const toggleTodo: (id: number) => ReduxAction<TodoItemType> = (id) => ({
         id,
     },
 });
+
+export const changeTodo: (id: number, newContent: string) => ReduxAction<TodoItemType> = (id, newContent) => ({
+   type: 'CHANGE_TODO',
+   payload: {
+       id,
+       description: newContent,
+   }
+});
