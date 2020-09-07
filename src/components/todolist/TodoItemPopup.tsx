@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { TodoItemPopupProps } from '../../utils/types';
 import EditableInput from '../EditableInput';
 import { changeTodo } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
-const Buttons = ({ isEditing, onSubmit, setIsEditing }: any): JSX.Element => {
+const Buttons = ({ isEditing, onSubmit, onClose, setIsEditing }: any): JSX.Element => {
     const submit = (): void => {
         setIsEditing(!isEditing);
         onSubmit();
@@ -12,6 +12,7 @@ const Buttons = ({ isEditing, onSubmit, setIsEditing }: any): JSX.Element => {
 
     const close = (): void => {
         setIsEditing(!isEditing);
+        onClose();
     };
 
     return isEditing ? (
@@ -24,7 +25,7 @@ const Buttons = ({ isEditing, onSubmit, setIsEditing }: any): JSX.Element => {
             </button>
         </div>
     ) : (
-        <div>
+        <div className="flex justify-center">
             <button className="bg-gray-400 hover:bg-gray-500 py-2 px-4" onClick={close}>
                 edit
             </button>
@@ -37,20 +38,28 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
     const dispatch = useDispatch();
 
     const onSubmit = (): void => {
-        dispatch(changeTodo(todo.id, value ?? todo.description ?? ''));
+        dispatch(changeTodo(todo.id, value));
     };
 
-    return isOpen ? (
-        <div className="fixed inset-0 z-50 flex overflow-auto" style={{ background: 'rgba(0,0,0,0.4)' }}>
+    const onClosePopup = (): void => {
+        setValue(todo.description);
+    };
+
+    return (
+        <div
+            className="fixed inset-0 z-50 flex overflow-auto"
+            style={{ background: 'rgba(0,0,0,0.4)', display: isOpen ? 'flex' : 'none' }}
+        >
             <div className="relative m-auto p-8 w-full max-w-md max-h-md flex flex-col bg-white">
                 <EditableInput
                     defaultValue={value}
                     onChangeInputValue={(e: any): void => setValue(e.target.value)}
                     onSubmit={onSubmit}
+                    onClose={onClosePopup}
                 >
                     {(props: any): JSX.Element => <Buttons {...props} />}
                 </EditableInput>
-                <span className="absolute pin-t pin-b pin-r p-4">
+                <span className="absolute p-4">
                     <button onClick={onClose}>
                         <svg
                             className="h-12 w-12 fill-current text-grey hover:text-grey-darkest"
@@ -65,23 +74,7 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
                 </span>
             </div>
         </div>
-    ) : (
-        <div></div>
     );
-
-    // <Modal isOpen={isOpen} onClose={onClose}>
-    //     <ModalOverlay />
-    //     <ModalContent>
-    //         <ModalHeader>{todoItemContent}</ModalHeader>
-    //         <ModalCloseButton />
-    //         <ModalBody>
-    //             <Text>Actions</Text>
-    //             <Button variantColor="teal" variant="outline" mt={10} mb={10}>
-    //                 Add sub-task
-    //             </Button>
-    //         </ModalBody>
-    //     </ModalContent>
-    // </Modal>
 };
 
 export default TodoItemPopup;

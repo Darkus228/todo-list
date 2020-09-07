@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-const EditableInput = ({ defaultValue, onChangeInputValue, onSubmit, children }: any): JSX.Element => {
+const EditableInput = ({ defaultValue, onChangeInputValue, onSubmit, onClose, children }: any): JSX.Element => {
     const [isEditing, setIsEditing] = useState(false);
-    const childrenProps = { isEditing, onSubmit, defaultValue, setIsEditing };
+    const childrenProps = { isEditing, onSubmit, defaultValue, setIsEditing, onClose };
 
     return (
         <div className="text-center">
             {isEditing ? (
-                <input type="text" onChange={onChangeInputValue} value={defaultValue} />
+                <input type="text" className="text-xl text-center" onChange={onChangeInputValue} value={defaultValue} />
             ) : (
                 <h2 className="text-xl">{defaultValue}</h2>
             )}

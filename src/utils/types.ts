@@ -1,4 +1,4 @@
-export interface ReduxAction<T> {
+export interface ReduxAction<T extends {}> {
     type: string;
     payload: T;
 }
@@ -9,13 +9,12 @@ export interface ReduxState {
 
 export type TodoItemType = {
     id: number;
-    description?: string;
-    completed?: boolean;
+    description: string;
+    completed: boolean;
 };
 
 export type TodoItemProps = {
     todoItem: TodoItemType;
-    key?: number;
 };
 
 export type TodoItemPopupProps = {

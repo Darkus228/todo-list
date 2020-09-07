@@ -11,17 +11,20 @@ export const addTodo: (content: string) => ReduxAction<TodoItemType> = (content)
     },
 });
 
-export const toggleTodo: (id: number) => ReduxAction<TodoItemType> = (id) => ({
+export const toggleTodo: (id: number) => ReduxAction<{ id: number }> = (id) => ({
     type: 'TOGGLE_TODO',
     payload: {
         id,
     },
 });
 
-export const changeTodo: (id: number, newContent: string) => ReduxAction<TodoItemType> = (id, newContent) => ({
-   type: 'CHANGE_TODO',
-   payload: {
-       id,
-       description: newContent,
-   }
+export const changeTodo: (id: number, newContent: string) => ReduxAction<{ id: number; description: string }> = (
+    id,
+    newContent,
+) => ({
+    type: 'CHANGE_TODO',
+    payload: {
+        id,
+        description: newContent,
+    },
 });
