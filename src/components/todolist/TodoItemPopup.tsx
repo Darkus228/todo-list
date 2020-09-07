@@ -59,7 +59,7 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
                 >
                     {(props: any): JSX.Element => <Buttons {...props} />}
                 </EditableInput>
-                <span className="absolute p-4">
+                <span className="absolute top-0 right-0 p-4">
                     <button onClick={onClose}>
                         <svg
                             className="h-12 w-12 fill-current text-grey hover:text-grey-darkest"

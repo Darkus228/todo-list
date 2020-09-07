@@ -7,7 +7,13 @@ const EditableInput = ({ defaultValue, onChangeInputValue, onSubmit, onClose, ch
     return (
         <div className="text-center">
             {isEditing ? (
-                <input type="text" className="text-xl text-center" onChange={onChangeInputValue} value={defaultValue} />
+                <input
+                    type="text"
+                    className="text-xl text-center bg-white my-1 focus:outline-none focus:shadow-outline rounded-lg"
+                    onChange={onChangeInputValue}
+                    value={defaultValue}
+                    autoFocus
+                />
             ) : (
                 <h2 className="text-xl">{defaultValue}</h2>
             )}
