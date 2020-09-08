@@ -30,7 +30,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ todoItem }): JSX.Element => {
 };
 
 const TodoItems = (): JSX.Element => {
-    const todoItems: TodoItemType[] = useSelector(({ todos }: ReduxState): TodoItemType[] => todos, shallowEqual);
+    const todoItems = useSelector(({ todos }: ReduxState): TodoItemType[] => todos, shallowEqual);
 
     const renderedTodoItems = todoItems.map((todo, key) => <TodoItem todoItem={todo} key={key} />);
 

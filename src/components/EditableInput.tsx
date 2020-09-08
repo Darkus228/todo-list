@@ -15,7 +15,7 @@ const EditableInput = ({ defaultValue, onChangeInputValue, onSubmit, onClose, ch
                     autoFocus
                 />
             ) : (
-                <h2 className="text-xl">{defaultValue}</h2>
+                <p className="text-xl">{defaultValue}</p>
             )}
             {children(childrenProps)}
         </div>

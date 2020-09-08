@@ -11,6 +11,7 @@ export type TodoItemType = {
     id: number;
     description: string;
     completed: boolean;
+    children: TodoItemType[];
 };
 
 export type TodoItemProps = {

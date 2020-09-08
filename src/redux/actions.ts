@@ -8,6 +8,20 @@ export const addTodo: (content: string) => ReduxAction<TodoItemType> = (content)
         id: nextTodoId++,
         description: content,
         completed: false,
+        children: [],
+    },
+});
+
+export const addSubTodo: (parentId: number, description: string) => ReduxAction<TodoItemType> = (
+    parentId,
+    description,
+) => ({
+    type: 'ADD_SUBTODO',
+    payload: {
+        id: parentId,
+        description,
+        completed: false,
+        children: [],
     },
 });
 
