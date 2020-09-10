@@ -5,22 +5,22 @@ import { changeTodo, addSubTodo } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
 const EditableControl = ({ isEditing, onSubmit, onClose, setIsEditing }: any): JSX.Element => {
-    const submit = (): void => {
+    const onSubmitInputValue = (): void => {
         setIsEditing(!isEditing);
         onSubmit();
     };
 
-    const close = (): void => {
+    const onCancelInputValue = (): void => {
         setIsEditing(!isEditing);
         onClose();
     };
 
     return isEditing ? (
         <div className="flex justify-center">
-            <button className="bg-gray-400 hover:bg-gray-500 py-2 px-4 rounded-l" onClick={submit}>
+            <button className="bg-gray-400 hover:bg-gray-500 py-2 px-4 rounded-l" onClick={onSubmitInputValue}>
                 submit
             </button>
-            <button className="bg-gray-400 hover:bg-gray-500 py-2 px-4 rounded-r" onClick={close}>
+            <button className="bg-gray-400 hover:bg-gray-500 py-2 px-4 rounded-r" onClick={onCancelInputValue}>
                 close
             </button>
         </div>
@@ -33,6 +33,10 @@ const EditableControl = ({ isEditing, onSubmit, onClose, setIsEditing }: any): J
     );
 };
 
+// const SubTodoEditableControl = ({}: any): JSX.Element => {
+//     jjjjjjj
+// };
+
 const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }): JSX.Element => {
     const [todoValue, setTodoValue] = useState(todo.description);
     const [subTodoValue, setSubTodoValue] = useState('');
@@ -43,16 +47,20 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
         dispatch(changeTodo(todo.id, todoValue));
     };
 
-    const onSubmitAddSubTodo = (): void => {
-        dispatch(addSubTodo(todo.id, subTodoValue));
+    const onSubmitAddSubTodo = (e: React.KeyboardEvent): void => {
+        if (e.key === 'Enter' && subTodoValue.trim()) {
+            dispatch(addSubTodo(todo.id, subTodoValue));
+
+            setEdit(!edit);
+        }
     };
 
     const onCloseInput = (): void => {
         setTodoValue(todo.description);
     };
 
-    // FIXME: Get rid of bacgkround as property of an object
-    // FIXME: Change all types of any on something meaningful
+    // FIXME: Get rid of background as property of an object
+    // FIXME: Change all types of any on something more meaningful
     return (
         <div
             className="fixed inset-0 z-50 flex overflow-auto"
@@ -83,16 +91,10 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
                 </EditableInput>
                 <hr className="my-5" />
                 {/* TODO: change all the handlers of editable input below to handling adding sub-todo of existent todo  */}
+                {/* TODO: add drawing all children's todos of the current todo parent */}
                 {edit ? (
-                    <EditableInput
-                        defaultValue={subTodoValue}
-                        onChangeInputValue={(e: any): void => setSubTodoValue(e.target.value)}
-                        onSubmit={onSubmitAddSubTodo}
-                        onClose={onCloseInput}
-                    >
-                        {(props: any): JSX.Element => <EditableControl {...props} />}
-                    </EditableInput>
-                ) : (
+                    <input type="text" onChange={(e): void => setSubTodoValue(e.target.value)} onKeyDown={onSubmitAddSubTodo}/>
+               ) : (
                     <button
                         className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
                         onClick={(): void => setEdit(!edit)}
