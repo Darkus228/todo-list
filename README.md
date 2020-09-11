@@ -1,4 +1,4 @@
-The todo-list is a shallow copy of [todoist](https://todoist.com].
+The todo-list is a shallow copy of [todoist](https://todoist.com).
 
 ## You can check it out
 
