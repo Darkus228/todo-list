@@ -1,7 +1,7 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { TodoItemPopupProps } from '../../utils/types';
 import EditableInput from '../EditableInput';
-import { changeTodo, addSubTodo } from '../../redux/actions';
+import { changeTodo, addSubTodo } from '../../redux/store';
 import { useDispatch } from 'react-redux';
 
 const EditableControl = ({ isEditing, onSubmit, onClose, setIsEditing }: any): JSX.Element => {
@@ -89,13 +89,20 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
                 {/* TODO: change all the handlers of editable input below to handling adding sub-todo of existent todo  */}
                 {/* TODO: add drawing all children's todos of the current todo parent */}
                 <ul>
-                    {todo.children.map((childTodo): JSX.Element => {
-                        return <li key={childTodo.id}>{childTodo.description}</li>
-                    })}
+                    {todo.children.map(
+                        (childTodo): JSX.Element => {
+                            return <li key={childTodo.id}>{childTodo.description}</li>;
+                        },
+                    )}
                 </ul>
                 {edit ? (
-                    <input type="text" onChange={(e): void => setSubTodoValue(e.target.value)} onKeyDown={onSubmitAddSubTodo} autoFocus/>
-               ) : (
+                    <input
+                        type="text"
+                        onChange={(e): void => setSubTodoValue(e.target.value)}
+                        onKeyDown={onSubmitAddSubTodo}
+                        autoFocus
+                    />
+                ) : (
                     <button
                         className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
                         onClick={(): void => setEdit(!edit)}

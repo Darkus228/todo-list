@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { TodoItemType } from '../../utils/types';
-import { toggleTodo } from '../../redux/actions';
+import { toggleTodo } from '../../redux/store';
 import { TodoItemProps } from '../../utils/types';
 import TodoItemPopup from './TodoItemPopup';
-
 
 const TodoItem: React.FC<TodoItemProps> = ({ todoItem }): JSX.Element => {
     const [isOpenAlert, setIsOpenAlert] = useState(false);
@@ -24,11 +23,10 @@ const TodoItem: React.FC<TodoItemProps> = ({ todoItem }): JSX.Element => {
             <button className="ml-2" onClick={onChangeAlertState}>
                 <p className="text-gray-600">{todoItem.description}</p>
             </button>
-            <TodoItemPopup todo={todoItem} isOpen={isOpenAlert} onClose={onChangeAlertState}/>
-            {todoItem.children.length > 0 && <TodoItems todoItems={todoItem.children}/>}
+            <TodoItemPopup todo={todoItem} isOpen={isOpenAlert} onClose={onChangeAlertState} />
+            {todoItem.children.length > 0 && <TodoItems todoItems={todoItem.children} />}
         </li>
-
-);
+    );
 };
 
 const TodoItems = ({ todoItems }: { todoItems: TodoItemType[] }): JSX.Element => {

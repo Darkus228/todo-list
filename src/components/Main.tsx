@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import { addTodo } from '../redux/actions';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { addTodo } from '../redux/store';
 import TodoItems from './todolist/TodoItems';
-import {ReduxState, TodoItemType} from "../utils/types";
+import { ReduxState, TodoItemType } from '../utils/types';
 
 const Main = (): JSX.Element => {
     const [inputValue, setInputValue] = useState('');
