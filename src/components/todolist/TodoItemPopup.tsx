@@ -45,7 +45,6 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
 
     const onSubmitAddSubTodo = (e: React.KeyboardEvent): void => {
         if (e.key === 'Enter' && subTodoValue.trim()) {
-            /* FIXME: ADD ADDITIONAL ARGUMENT AND THINK OF RECONSTRUCT THE METHOD BELOW */
             dispatch(addSubTodo(todo.id, subTodoValue));
 
             setEdit(!edit);

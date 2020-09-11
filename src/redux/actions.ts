@@ -12,14 +12,12 @@ export const addTodo: (content: string) => ReduxAction<TodoItemType> = (content)
     },
 });
 
-export const addSubTodo: (parentId: number, todo: TodoItemType, description: string) => ReduxAction<TodoItemType> = (
+export const addSubTodo: (parentId: number, description: string) => ReduxAction<TodoItemType> = (
     parentId,
-    todo,
     description,
 ) => ({
     type: 'ADD_SUBTODO',
     payload: {
-        todo,
         id: parentId,
         description: description,
         completed: false,
