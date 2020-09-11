@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { shallowEqual, useSelector, useDispatch } from 'react-redux';
-import { TodoItemType, ReduxState } from '../../utils/types';
+import { useDispatch } from 'react-redux';
+import { TodoItemType } from '../../utils/types';
 import { toggleTodo } from '../../redux/actions';
 import { TodoItemProps } from '../../utils/types';
 import TodoItemPopup from './TodoItemPopup';
@@ -25,16 +25,16 @@ const TodoItem: React.FC<TodoItemProps> = ({ todoItem }): JSX.Element => {
                 <p className="text-gray-600">{todoItem.description}</p>
             </button>
             <TodoItemPopup todo={todoItem} isOpen={isOpenAlert} onClose={onChangeAlertState}/>
+            {todoItem.children.length > 0 && <TodoItems todoItems={todoItem.children}/>}
         </li>
-    );
+
+);
 };
 
-const TodoItems = (): JSX.Element => {
-    const todoItems = useSelector(({ todos }: ReduxState): TodoItemType[] => todos, shallowEqual);
+const TodoItems = ({ todoItems }: { todoItems: TodoItemType[] }): JSX.Element => {
+    const renderedTodoItems = todoItems.map((todo) => <TodoItem todoItem={todo} key={todo.id} />);
 
-    const renderedTodoItems = todoItems.map((todo, key) => <TodoItem todoItem={todo} key={key} />);
-
-    return <ul>{renderedTodoItems}</ul>;
+    return <ul className="ml-5">{renderedTodoItems}</ul>;
 };
 
 export default TodoItems;

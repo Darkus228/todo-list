@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import { addTodo } from '../redux/actions';
 import TodoItems from './todolist/TodoItems';
+import {ReduxState, TodoItemType} from "../utils/types";
 
 const Main = (): JSX.Element => {
     const [inputValue, setInputValue] = useState('');
     const dispatch = useDispatch();
+    const todoItems = useSelector(({ todos }: ReduxState): TodoItemType[] => todos, shallowEqual);
 
     const onAddTodoItem: (e: React.KeyboardEvent) => void = (e) => {
         if (e.key === 'Enter') {
@@ -29,7 +31,7 @@ const Main = (): JSX.Element => {
                     autoFocus
                 />
                 <h1 className="font-bold text-2xl text-green">Today</h1>
-                <TodoItems />
+                <TodoItems todoItems={todoItems} />
             </div>
         </div>
     );

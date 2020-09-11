@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import { TodoItemPopupProps } from '../../utils/types';
 import EditableInput from '../EditableInput';
 import { changeTodo, addSubTodo } from '../../redux/actions';
@@ -26,16 +26,12 @@ const EditableControl = ({ isEditing, onSubmit, onClose, setIsEditing }: any): J
         </div>
     ) : (
         <div className="flex justify-center">
-            <button className="bg-gray-400 hover:bg-gray-500 py-2 px-4" onClick={close}>
+            <button className="bg-gray-400 hover:bg-gray-500 py-2 px-4" onClick={(): void => setIsEditing(!isEditing)}>
                 edit
             </button>
         </div>
     );
 };
-
-// const SubTodoEditableControl = ({}: any): JSX.Element => {
-//     jjjjjjj
-// };
 
 const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }): JSX.Element => {
     const [todoValue, setTodoValue] = useState(todo.description);
@@ -49,6 +45,7 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
 
     const onSubmitAddSubTodo = (e: React.KeyboardEvent): void => {
         if (e.key === 'Enter' && subTodoValue.trim()) {
+            /* FIXME: ADD ADDITIONAL ARGUMENT AND THINK OF RECONSTRUCT THE METHOD BELOW */
             dispatch(addSubTodo(todo.id, subTodoValue));
 
             setEdit(!edit);
@@ -83,7 +80,7 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
 
                 <EditableInput
                     defaultValue={todoValue}
-                    onChangeInputValue={(e: any): void => setTodoValue(e.target.value)}
+                    onChangeInputValue={(e: ChangeEvent<HTMLInputElement>): void => setTodoValue(e.target.value)}
                     onSubmit={onSubmit}
                     onClose={onCloseInput}
                 >
@@ -92,8 +89,13 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
                 <hr className="my-5" />
                 {/* TODO: change all the handlers of editable input below to handling adding sub-todo of existent todo  */}
                 {/* TODO: add drawing all children's todos of the current todo parent */}
+                <ul>
+                    {todo.children.map((childTodo): JSX.Element => {
+                        return <li key={childTodo.id}>{childTodo.description}</li>
+                    })}
+                </ul>
                 {edit ? (
-                    <input type="text" onChange={(e): void => setSubTodoValue(e.target.value)} onKeyDown={onSubmitAddSubTodo}/>
+                    <input type="text" onChange={(e): void => setSubTodoValue(e.target.value)} onKeyDown={onSubmitAddSubTodo} autoFocus/>
                ) : (
                     <button
                         className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
