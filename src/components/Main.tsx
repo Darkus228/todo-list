@@ -24,7 +24,7 @@ const Main = (): JSX.Element => {
             <div className="w-full sm:w-1/2">
                 <input
                     placeholder="Enter a task..."
-                    onChange={(event: any): void => setInputValue(event.target.value)}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>): void => setInputValue(event.target.value)}
                     onKeyDown={onAddTodoItem}
                     value={inputValue}
                     className="bg-white my-1 focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"

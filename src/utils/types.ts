@@ -1,5 +1,4 @@
 export interface ReduxAction<T extends {}> {
-    type: string;
     payload: T;
 }
 
@@ -12,6 +11,10 @@ export type TodoItemType = {
     description: string;
     completed: boolean;
     children: TodoItemType[];
+};
+
+export type TodoItemsProps = {
+    todoItems: TodoItemType[];
 };
 
 export type TodoItemProps = {
