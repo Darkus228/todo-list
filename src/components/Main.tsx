@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { addTodo } from '../redux/store';
+import { addTodo } from '../redux/reducers';
 import TodoItems from './todolist/TodoItems';
 import { ReduxState, TodoItemType } from '../utils/types';
 

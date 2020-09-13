@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { changeTodo, addSubTodo } from '../../redux/store';
+import { changeTodo, addSubTodo } from '../../redux/reducers';
 import { useDispatch } from 'react-redux';
 import { FaEdit, FaCheck } from 'react-icons/fa';
 import { ImCross } from 'react-icons/im';

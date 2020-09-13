@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { FaArrowDown, FaArrowRight } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { TodoItemsProps } from '../../utils/types';
-import { toggleTodo } from '../../redux/store';
+import { toggleTodo } from '../../redux/reducers';
 import { TodoItemProps } from '../../utils/types';
 import TodoItemPopup from './TodoItemPopup';
 
@@ -24,7 +25,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ todoItem }): JSX.Element => {
                 <p className="text-gray-600">{todoItem.description}</p>
             </button>
             <TodoItemPopup todo={todoItem} isOpen={isOpenAlert} onClose={onChangeAlertState} />
-            
+
             {todoItem.children.length > 0 && <TodoItems todoItems={todoItem.children} />}
         </li>
     );
