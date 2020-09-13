@@ -43,12 +43,17 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
     const dispatch = useDispatch();
 
     const onSubmit = (): void => {
+        console.log(todo);
         dispatch(changeTodo(todo.id, todoValue));
+    };
+
+    const onChangeEditState = (): void => {
+        setEdit(!edit);
     };
 
     const onSubmitAddSubTodo = (e: React.KeyboardEvent): void => {
         if (e.key === 'Enter' && subTodoValue.trim()) {
-            dispatch(addSubTodo(todo, subTodoValue));
+            dispatch(addSubTodo(todo.id, subTodoValue));
 
             setEdit(!edit);
         }
@@ -98,12 +103,12 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
                         onChange={(e): void => setSubTodoValue(e.target.value)}
                         onKeyDown={onSubmitAddSubTodo}
                         autoFocus
-                        onBlur={(): void => setEdit(!edit)}
+                        onBlur={onChangeEditState}
                     />
                 ) : (
                     <button
                         className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                        onClick={(): void => setEdit(!edit)}
+                        onClick={onChangeEditState}
                     >
                         Add sub-task
                     </button>

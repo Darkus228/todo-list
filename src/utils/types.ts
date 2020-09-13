@@ -7,7 +7,7 @@ export interface ReduxState {
 }
 
 export type TodoItemType = {
-    id: number;
+    id: string;
     description: string;
     completed: boolean;
     children: TodoItemType[];
