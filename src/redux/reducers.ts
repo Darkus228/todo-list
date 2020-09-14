@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { TodoItemType, ReduxAction } from '../utils/types';
 
-
 function recursiveCheck(todos: TodoItemType[], action: any, callback: Function): TodoItemType[] {
     const { id } = action.payload;
 
@@ -26,7 +25,6 @@ function toggleChildrenTodos(todos: TodoItemType[]): TodoItemType[] {
         todo.completed = !todo.completed;
         return todo;
     });
-
 }
 
 const todosSlice = createSlice({
