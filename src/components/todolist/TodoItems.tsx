@@ -19,7 +19,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ todoItem }): JSX.Element => {
     };
 
     return (
-        <li className="list-none bg-white w-full my-2">
+        <li className="list-none w-full my-2">
             <input type="checkbox" onChange={onToggleTodo} checked={todoItem.completed} />
             <button className="ml-2" onClick={onChangeAlertState}>
                 <p className="text-gray-600">{todoItem.description}</p>
