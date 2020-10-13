@@ -34,7 +34,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ todoItem }): JSX.Element => {
 const TodoItems: React.FC<TodoItemsProps> = ({ todoItems }): JSX.Element => {
     const renderedTodoItems = todoItems.map((todo) => <TodoItem todoItem={todo} key={todo.id} />);
 
-    return <ul className="ml-5">{renderedTodoItems}</ul>;
+    return renderedTodoItems.length > 0 ? <ul className="ml-5">{renderedTodoItems}</ul> : <h3 className="my-2">All tasks has been done for today :)</h3>;
 };
 
 export default TodoItems;

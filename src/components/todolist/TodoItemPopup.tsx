@@ -43,7 +43,6 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
     const dispatch = useDispatch();
 
     const onSubmit = (): void => {
-        console.log(todo);
         dispatch(changeTodo(todo.id, todoValue));
     };
 

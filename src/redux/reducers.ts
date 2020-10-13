@@ -2,28 +2,27 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { TodoItemType, ReduxAction } from '../utils/types';
 
-function recursiveCheck(todos: TodoItemType[], action: any, callback: Function): TodoItemType[] {
+function changeTodosState(todos: TodoItemType[], action: any, callback: Function): void {
     const { id } = action.payload;
 
     todos.forEach((todo) => {
         if (todo.id === id) {
-            callback(todo, action);
+            callback(todo);
         } else {
-            return recursiveCheck(todo.children, action, callback);
+            changeTodosState(todo.children, action, callback);
         }
     });
-
-    return todos;
 }
 
-function toggleChildrenTodos(todos: TodoItemType[]): TodoItemType[] {
-    return todos.map((todo) => {
+function toggleChildrenTodos(isParentTodoCompleted: boolean, childrenTodos: TodoItemType[]): void {
+    childrenTodos.forEach((todo) => {
         if (todo.children.length > 0) {
-            toggleChildrenTodos(todo.children);
+            toggleChildrenTodos(isParentTodoCompleted, todo.children);
         }
 
-        todo.completed = !todo.completed;
-        return todo;
+        if (isParentTodoCompleted) {
+            todo.completed = true;
+        } 
     });
 }
 
@@ -41,7 +40,7 @@ const todosSlice = createSlice({
         },
         addSubTodo: {
             reducer(state: TodoItemType[], action: PayloadAction<TodoItemType>): void {
-                state = recursiveCheck(state, action, (todo: TodoItemType, action: any): void => {
+                changeTodosState(state, action, (todo: TodoItemType): void => {
                     todo?.children.push({
                         ...action.payload,
                         id: uuidv4(),
@@ -54,18 +53,24 @@ const todosSlice = createSlice({
         },
         toggleTodo: {
             reducer(state: TodoItemType[], action: PayloadAction<{ id: string }>): void {
-                state = recursiveCheck(state, action, (todo: TodoItemType, action: any): void => {
+
+                changeTodosState(state, action, (todo: TodoItemType) => {
                     todo.completed = !todo.completed;
-                    toggleChildrenTodos(todo.children);
+                    toggleChildrenTodos(todo.completed, todo.children);
+ 
                 });
-            },
+                // state.forEach((todo): void => {
+                //     if(todo.id === action.payload.id) {
+                //    }
+                // });
+           },
             prepare(id: string): ReduxAction<{ id: string }> {
                 return { payload: { id } };
             },
         },
         changeTodo: {
             reducer(state: TodoItemType[], action: PayloadAction<{ id: string; description: string }>): void {
-                state = recursiveCheck(state, action, (todo: TodoItemType, action: any): void => {
+                changeTodosState(state, action, (todo: TodoItemType): void => {
                     todo.description = action.payload.description;
                 });
             },
