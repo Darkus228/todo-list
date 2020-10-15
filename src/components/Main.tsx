@@ -1,14 +1,50 @@
 import React, { useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { addTodo } from '../redux/reducers';
+import { createSelector } from '@reduxjs/toolkit';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTodo } from '../redux/todoSlice';
+import { State, TodoItemType, VisibilityFilter } from '../utils/types';
+import { changeTodosState } from '../utils/helpers';
+import FilterLink from './filter/FilterLink';
 import TodoItems from './todolist/TodoItems';
-import { ReduxState, TodoItemType } from '../utils/types';
+
+const selectTodos = (state: State): TodoItemType[] => state.todos;
+const selectVisibilityFilter = (state: State): VisibilityFilter => state.visibilityFilter;
+const setVisibleTodos = createSelector(
+    selectTodos, 
+    selectVisibilityFilter,
+    (todos: TodoItemType[], filter: VisibilityFilter): TodoItemType[] => {
+        switch(filter) {
+            case VisibilityFilter.ALL:
+                return todos;
+            case VisibilityFilter.COMPLETED:
+                const completedTodos: TodoItemType[] = [];
+                changeTodosState(todos, (todo: TodoItemType): boolean => {
+                    if ((todo.completed && todo.children.length > 0) || (todo.completed && todo.children.length == 0)) {
+                        completedTodos.push(todo);
+                        return true;
+                    }
+                    return false;
+                })
+                return completedTodos;
+            case VisibilityFilter.ACTIVE:
+                const activeTodos: TodoItemType[] = []; 
+                changeTodosState(todos, (todo: TodoItemType): boolean => {
+                    if ((!todo.completed && todo.children.length > 0) || (!todo.completed && todo.children.length == 0)) {
+                        activeTodos.push(todo);
+                        return false;
+                    }
+                    return true;
+                })
+                return activeTodos;
+        }
+    },
+);
 
 const Main = (): JSX.Element => {
     const [inputValue, setInputValue] = useState('');
     const [searchValue, setSearchValue] = useState('');
     const dispatch = useDispatch();
-    const todoItems = useSelector(({ todos }: ReduxState): TodoItemType[] => todos, shallowEqual);
+    const copyItems = setVisibleTodos(useSelector((state: State) => state));
 
     const onAddTodoItem: (e: React.KeyboardEvent) => void = (e) => {
         if (e.key === 'Enter') {
@@ -22,9 +58,10 @@ const Main = (): JSX.Element => {
 
     const onSearchTodo: (e: React.KeyboardEvent) => void = (e) => {
         if (e.key === 'Enter') {
-            
+            console.log("adfasdf")
+            // copyItems = todoItems.filter((todo) => todo.description.includes(searchValue));
+            console.log(copyItems);
         }
-
     }
 
     return (
@@ -48,10 +85,19 @@ const Main = (): JSX.Element => {
                 />
  
                 </div>
-               <h1 className="font-bold text-2xl">
+                <h1 className="font-bold text-2xl">
                     Today <span className="text-sm">{new Date().toDateString()}</span>
                 </h1>
-                <TodoItems todoItems={todoItems} />
+                <FilterLink filter={VisibilityFilter.ALL}>
+                    ALL
+                </FilterLink>
+                <FilterLink filter={VisibilityFilter.ACTIVE}>
+                    ACTIVE
+                </FilterLink>
+                <FilterLink filter={VisibilityFilter.COMPLETED}>
+                    COMPLETED
+                </FilterLink>
+               <TodoItems todoItems={copyItems} />
             </div>
         </div>
     );

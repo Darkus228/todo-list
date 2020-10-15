@@ -1,3 +1,8 @@
+export interface State {
+    todos: TodoItemType[];
+    visibilityFilter: VisibilityFilter;
+}
+
 export interface ReduxAction<T extends {}> {
     payload: T;
 }
@@ -25,4 +30,12 @@ export type TodoItemPopupProps = {
     todo: TodoItemType;
     isOpen: boolean;
     onClose(): void;
+};
+
+export type FilterType = string;
+
+export enum VisibilityFilter {
+    ALL = "ALL",
+    COMPLETED = "COMPLETED",
+    ACTIVE = "ACTIVE"
 };

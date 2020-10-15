@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { changeTodo, addSubTodo } from '../../redux/reducers';
+import { changeTodo, addSubTodo } from '../../redux/todoSlice';
 import { useDispatch } from 'react-redux';
 import { FaEdit, FaCheck } from 'react-icons/fa';
 import { ImCross } from 'react-icons/im';
@@ -93,8 +93,7 @@ const TodoItemPopup: React.FC<TodoItemPopupProps> = ({ todo, onClose, isOpen }):
                     {(props: any): JSX.Element => <EditableControl {...props} />}
                 </EditableInput>
                 <hr className="my-5" />
-                {/* TODO: change all the handlers of editable input below to handling adding sub-todo of existent todo  */}
-                {/* TODO: add drawing all children's todos of the current todo parent */}
+                <h3 className="text-center">Sub-tasks</h3>
                 <TodoItems todoItems={todo.children} />
                 {edit ? (
                     <input
