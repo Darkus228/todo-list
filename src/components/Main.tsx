@@ -12,10 +12,27 @@ const selectSearchValue = (state: State): string => state.search;
 const selectTodos = (state: State): TodoItemType[] => state.todos;
 const selectVisibilityFilter = (state: State): VisibilityFilter => state.visibilityFilter;
 
-
+const setSearchedTodos = createSelector(
+    selectTodos,
+    selectSearchValue,
+    (todos, searchValue): TodoItemType[] => {
+        const searchedTodos: TodoItemType[] = [];
+        changeTodosState(todos, (todo): boolean => {
+            if (todo.description.includes(searchValue)) {
+                if (todo.children.length > 0 || todo.children.length === 0) {
+                    searchedTodos.push(todo);
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        });
+        return searchedTodos;
+    }
+);
 
 const setVisibleTodos = createSelector(
-    selectTodos,
+    setSearchedTodos,
     selectVisibilityFilter,
     (todos: TodoItemType[], filter: VisibilityFilter): TodoItemType[] => {
         switch(filter) {
@@ -45,28 +62,13 @@ const setVisibleTodos = createSelector(
     },
 );
 
-const setSearchedTodos = createSelector(
-    setVisibleTodos,
-    selectSearchValue,
-    (todos, searchValue): TodoItemType[] => {
-        const searchedTodos: TodoItemType[] = [];
-        changeTodosState(todos, (todo) => {
-            if (todo.description.includes(searchValue)) {
-                if (todo.children.length > 0 ) {
 
-                }
-                searchedTodos.push(todo);
-            }
-        });
-        return searchedTodos;
-    }
-);
 
 
 const Main = (): JSX.Element => {
     const [inputValue, setInputValue] = useState('');
     const dispatch = useDispatch();
-    const copyItems = setSearchedTodos(useSelector((state: State) => state));
+    const copyItems = setVisibleTodos(useSelector((state: State) => state));
 
     const onAddTodoItem: (e: React.KeyboardEvent) => void = (e) => {
         if (e.key === 'Enter') {
