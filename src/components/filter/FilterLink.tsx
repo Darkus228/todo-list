@@ -10,7 +10,7 @@ const FilterLink = ({ children, filter }: {
     const dispatch = useDispatch();
     return (
         <button
-            className="mx-1"
+            className="mx-1 focus:text-green-700"
             onClick={(): void => { dispatch(setVisibilityFilter(filter)) }}
         >
             {children}

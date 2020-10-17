@@ -1,6 +1,7 @@
 export interface State {
     todos: TodoItemType[];
     visibilityFilter: VisibilityFilter;
+    search: string;
 }
 
 export interface ReduxAction<T extends {}> {
