@@ -62,31 +62,21 @@ const setVisibleTodos = createSelector(
     },
 );
 
-
-
-
 const Main = (): JSX.Element => {
     const [inputValue, setInputValue] = useState('');
     const dispatch = useDispatch();
-    const copyItems = setVisibleTodos(useSelector((state: State) => state));
+    const todoItems = setVisibleTodos(useSelector((state: State) => state));
 
     const onAddTodoItem: (e: React.KeyboardEvent) => void = (e) => {
         if (e.key === 'Enter') {
             if (inputValue.trim() === '') return;
 
             dispatch(addTodo(inputValue));
-
             setInputValue('');
         }
     };
 
-    // const onSearchTodo: (e: React.KeyboardEvent) => void = (e) => {
-    //     if (e.key === 'Enter') {
-    //         dispatch(setSearchValue(searchTodoValue));
-    //     }
-    // }
-
-    return (
+        return (
         <div className="flex justify-center my-4 mx-2 sm:mx-0">
             <div className="w-full sm:w-1/2">
                 <div className="flex">
@@ -104,7 +94,6 @@ const Main = (): JSX.Element => {
                         dispatch(setSearchValue(event.target.value));
                     }
                 }
-                    // onKeyDown={/*onSearchTodo*/}
                     type="text" 
                     className="transition duration-500 ease-in-out transform focus:-translate-y-1 bg-white ml-2 my-1 focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-1/3 appearance-none"
                 />
@@ -122,7 +111,7 @@ const Main = (): JSX.Element => {
                 <FilterLink filter={VisibilityFilter.COMPLETED}>
                     COMPLETED
                 </FilterLink>
-               <TodoItems todoItems={copyItems} />
+               <TodoItems todoItems={todoItems} />
             </div>
         </div>
     );
